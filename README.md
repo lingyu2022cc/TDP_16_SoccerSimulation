@@ -3,3 +3,4 @@
 25/03/2023 change the feild size and players' positions
 
 25/03/2023 add Attack function and update global parameter fallbehindTeam, 2on1 logic to UpadatePlayer(by Chenwei Cui)
+25/03/2023 change the error when player kick ball (kickBall.m)
