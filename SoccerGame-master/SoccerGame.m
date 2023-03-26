@@ -3,14 +3,15 @@
 clear all
 clf
 clc
-close all
 
 % Initialzing values
 
 field = [120 90];
 kickoffTeam=0;
-formation1=[1 2];
-formation2=[1 2];
+% formation1=[3 3 1];
+% formation2=[1 2 3 1];
+formation1=[2 1];
+formation2=[2 1];
 nPlayers=sum(formation1)+sum(formation2)+2;
 attributes = [zeros(nPlayers/2,1); ones(nPlayers/2,1)];
 
@@ -38,10 +39,10 @@ while time < timeSteps
     isGoal=false;
     ball = InitializeBall(startPositionBall, startVelBall, startAccBall);
     [players,playerOriginalPosition] = InitializePlayers(formation1, formation2, field, attributes,kickoffTeam);
-% FormationPloter(formation1,formation2,field,attributes,kickoffTeam)
+%     FormationPloter(formation1,formation2,field,attributes,kickoffTeam)
     pause(1);
     while isGoal==false && time < timeSteps
-        [players, ball] = Update(players, ball, timeSync, timeDelta, playerOriginalPosition);
+        [players, ball] = Update(players, ball, timeSync, timeDelta, playerOriginalPosition,goalsTeam1,goalsTeam2);
         PlotConField(field)
         PlotPlayers(players)
         PlotBall(ball)
