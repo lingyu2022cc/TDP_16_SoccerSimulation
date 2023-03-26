@@ -3,7 +3,7 @@ function [updatedBall] = PassBall(ball, kickBallSigma, kickBallCoefficient, kick
 ballPosition = ball(1,:);
 updatedBall = ball;
 passLength=norm(targetPosition - ballPosition);
-kickBallCoefficient=kickBallCoefficient*normrnd(1,0.1); 
+kickBallCoefficient=kickBallCoefficient*normrnd(1,0.1); %för att få bort statiska lägena
 
 kickDirection = (targetPosition - ballPosition)/passLength;
 kickDirection(1) = kickDirection(1) + normrnd(0, kickBallSigma);

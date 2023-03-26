@@ -24,7 +24,7 @@ for i=1:playersLongSide
         counter=counter+1;
     end
 end
-players{1}(nPlayers/2,:)=[-58 0]; %the goalie
+players{1}(nPlayers/2,:)=[-42 0]; %the goalie
 playerOriginalPosition(1:nPlayers/2,1)=fieldLength/2-2*abs(players{1}(1:nPlayers/2,1));
 playerOriginalPosition(1:nPlayers/2,2)=players{1}(1:nPlayers/2,2);
 % team 1 starting positions below
@@ -41,7 +41,7 @@ for i=1:playersLongSide
         counter=counter+1;
     end
 end
-players{1}(nPlayers,:)=[58 0]; %the goalie
+players{1}(nPlayers,:)=[42 0]; %the goalie
 playerOriginalPosition(nPlayers/2+1:nPlayers,1)=-fieldLength/2+2*abs(players{1}(nPlayers/2+1:nPlayers,1));
 playerOriginalPosition(nPlayers/2+1:nPlayers,2)=players{1}(nPlayers/2+1:nPlayers,2);
 players{1}(nPlayers/2+1:nPlayers,2)=players{1}(nPlayers/2+1:nPlayers,2)+epsillon;
@@ -58,6 +58,8 @@ players{2}(nPlayers/2+1:end,2)=pi;
 players{2}(:,1)=1;
 
 %attributes
-players{3}(:,1)=attributes;
+players{3}=attributes;
+        
 
 end
+

@@ -1,7 +1,7 @@
 function [] = PlotBall(ball)
 pos = ball(1,:);
 %Ball size
-radie = 2;
+radie = 1.5;
 
 plotpos = [pos(1)-radie pos(2)-radie 2*radie 2*radie];
 rectangle('Position',plotpos,'Curvature',[1 1],'FaceColor','white');

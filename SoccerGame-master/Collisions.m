@@ -3,7 +3,7 @@ function [x,y,ball]=Collisions(x,y,ball,particleRadius)
 %   Detailed explanation goes here
 
 gridSize=length(x);
-c=1.0;
+c=1.8;
 
 %player collisions
 for i = 1:gridSize
