@@ -1,6 +1,4 @@
 function [x,y,ball]=Collisions(x,y,ball,particleRadius)
-%UNTITLED6 Summary of this function goes here
-%   Detailed explanation goes here
 
 gridSize=length(x);
 c=1.0;

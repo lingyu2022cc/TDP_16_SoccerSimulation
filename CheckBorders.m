@@ -1,8 +1,8 @@
 function [ball, players, goal] = CheckBorders(ball, players)
     nPlayers=length(players{1});
     
-    if (abs(ball(1,1))  > 60 || abs(ball(1,2))  > 45)
-        if (abs(ball(1,2))  < 7.32)
+    if (abs(ball(1,1))  > 45 || abs(ball(1,2))  > 30)
+        if (abs(ball(1,2))  < 13)
             disp('Goal!')
             %pause(1)
             goal = 1;
@@ -16,37 +16,37 @@ function [ball, players, goal] = CheckBorders(ball, players)
             closestPlayer = teamIndex(closestPlayer);
             pause(1)
             
-            if (ball(1,1) > 60)
-                ball(1,1) = 60;
+            if (ball(1,1) > 45)
+                ball(1,1) = 45;
                 if (otherTeam == 0)
-                    ball(1,2) = sign(ball(1,2)) * 45;
+                    ball(1,2) = sign(ball(1,2)) * 30;
                 else
-                    ball(1,:) = [54.5,0];
+                    ball(1,:) = [39.4,0];
                     for i = 1:nPlayers
-                        if (players{3}(i,1) == lastTeamOnBall && players{1}(i,1) > 40)
-                            players{1}(i,1) = 40;
+                        if (players{3}(i,1) == lastTeamOnBall && players{1}(i,1) > 30)
+                            players{1}(i,1) = 30;
                         end
                     end
                 end
             end
-            if (ball(1,1) < -60)
-                ball(1,1) = -60;
+            if (ball(1,1) < -45)
+                ball(1,1) = -45;
                 if (otherTeam == 1)
-                    ball(1,2) = sign(ball(1,2)) * 45;
+                    ball(1,2) = sign(ball(1,2)) * 30;
                 else
-                    ball(1,:) = [-54.5,0];
+                    ball(1,:) = [-39.4,0];
                     for i = 1:nPlayers
-                        if (players{3}(i,1) == lastTeamOnBall && players{1}(i,1) < -40)
-                            players{1}(i,1) = -40;
+                        if (players{3}(i,1) == lastTeamOnBall && players{1}(i,1) < -30)
+                            players{1}(i,1) = -30;
                         end
                     end
                 end
             end
-            if (ball(1,2) > 45)
-                ball(1,2) = 45;
+            if (ball(1,2) > 30)
+                ball(1,2) = 30;
             end
-            if (ball(1,2) < -45)
-                ball(1,2) = -45;
+            if (ball(1,2) < -30)
+                ball(1,2) = -30;
             end
             
             ball(2,:) = [0 0];
@@ -58,3 +58,5 @@ function [ball, players, goal] = CheckBorders(ball, players)
     goal = 0;
 
 end
+
+% working on value 40  on lines 27,40

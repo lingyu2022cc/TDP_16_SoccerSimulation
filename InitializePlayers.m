@@ -1,6 +1,6 @@
 function [players,playerOriginalPosition] = InitializePlayers(formation1,formation2,fieldSize,attributes,kickoffTeam)
-%UNTITLED Summary of this function goes here
-%   Detailed explanation goes here
+
+
 nPlayers=sum(formation1)+sum(formation2)+2;
 epsillon=1/10;
 fieldLength=fieldSize(1);
@@ -24,7 +24,7 @@ for i=1:playersLongSide
         counter=counter+1;
     end
 end
-players{1}(nPlayers/2,:)=[-58 0]; %the goalie
+players{1}(nPlayers/2,:)=[-42 0]; %the goalie
 playerOriginalPosition(1:nPlayers/2,1)=fieldLength/2-2*abs(players{1}(1:nPlayers/2,1));
 playerOriginalPosition(1:nPlayers/2,2)=players{1}(1:nPlayers/2,2);
 % team 1 starting positions below
@@ -41,7 +41,7 @@ for i=1:playersLongSide
         counter=counter+1;
     end
 end
-players{1}(nPlayers,:)=[58 0]; %the goalie
+players{1}(nPlayers,:)=[42 0]; %the goalie
 playerOriginalPosition(nPlayers/2+1:nPlayers,1)=-fieldLength/2+2*abs(players{1}(nPlayers/2+1:nPlayers,1));
 playerOriginalPosition(nPlayers/2+1:nPlayers,2)=players{1}(nPlayers/2+1:nPlayers,2);
 players{1}(nPlayers/2+1:nPlayers,2)=players{1}(nPlayers/2+1:nPlayers,2)+epsillon;
@@ -55,9 +55,11 @@ end
 
 %Fixing angles, velocities=1 in the begining
 players{2}(nPlayers/2+1:end,2)=pi;
-players{2}(:,1)=1;
+players{2}(:,1)=0.03;
 
 %attributes
-players{3}(:,1)=attributes;
+players{3}=attributes;
+        
 
 end
+

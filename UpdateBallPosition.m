@@ -1,10 +1,10 @@
 function [updatedBall] = UpdateBallPosition(ball, timeDelta, acceleration)
-%UPDATEBALLPOSITION Summary of this function goes here
-%   Detailed explanation goes here
-fieldLength=120;
-fieldWidth=90;
+
+
+fieldLength=110;
+fieldWidth=80;
 bounceCoefficient=0.2;
-frictionCoefficient=0.85; %less than 1
+frictionCoefficient=0.75; %less than 1
 
 updatedBall=ball;
 
