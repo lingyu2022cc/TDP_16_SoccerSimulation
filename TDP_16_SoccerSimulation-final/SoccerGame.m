@@ -51,9 +51,6 @@ while time < timeSteps
         PlotConField(field)
         PlotPlayers(players)
         PlotBall(ball)
-
-        % Update the plot at a limited frame rate
-        drawnow limitrate;
         
         % Check if the ball has crossed the field boundaries and adjust its position accordingly
         [ball, players, goal] = CheckBorders(ball, players);
