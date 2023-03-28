@@ -1,5 +1,7 @@
 function [ball, players, goal] = CheckBorders(ball, players)
+
     nPlayers=length(players{1});
+    
     % Clamp the ball's position to the field limits
     ball(1,1) = max(min(ball(1,1), 46), -46);
     ball(1,2) = max(min(ball(1,2), 31), -31);
