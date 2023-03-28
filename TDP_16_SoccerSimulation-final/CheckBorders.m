@@ -1,5 +1,8 @@
 function [ball, players, goal] = CheckBorders(ball, players)
     nPlayers=length(players{1});
+    % Clamp the ball's position to the field limits
+    ball(1,1) = max(min(ball(1,1), 46), -46);
+    ball(1,2) = max(min(ball(1,2), 31), -31);
 
     % Define the cell arrays of messages for different scenarios
     goalMsgs = {'What a fantastic goal', 'Unbelievable goal', 'Amazing goal', 'Incredible goal', 'Spectacular goal', 'What a strike', 'Top-class goal', 'Sublime finish', 'A goal to remember', 'An absolute beauty', 'Stunning effort', 'A moment of brilliance', 'Goal of the season contender', 'Phenomenal goal', 'A screamer from distance'};
@@ -42,17 +45,18 @@ function [ball, players, goal] = CheckBorders(ball, players)
             %pause(1)
             goal = 1;
             return
-        elseif (abs(ball(1,2)) > 13 && abs(ball(1,2)) <= 20) % Only display near miss message when the ball is out of bounds near the goals
-            MSG = commentators{randi(length(commentators))} + string(nearMissMsgs{randi(length(nearMissMsgs))}); % Ball is out of bounds but not a goal, show near miss message
-            disp(MSG)
-            txt = {[sprintf(MSG)]};            
-            text(0,-36,txt,'HorizontalAlignment','center')
         else
-            MSG = commentators{randi(length(commentators))}+string(outOFBounds{randi(length(outOFBounds))}); % Out of bounds
-            disp(MSG)
-            txt = {[sprintf(MSG)]};            
-            text(0,-36,txt,'HorizontalAlignment','center')
-
+            if ((ball(1,1) < -45 && abs(ball(1,2)) <= 20 || ball(1,1) > 45 && abs(ball(1,2)) <= 20) && abs(ball(1,2)) > 13)
+                MSG = commentators{randi(length(commentators))} + string(nearMissMsgs{randi(length(nearMissMsgs))}); % Ball is out of bounds but not a goal, show near miss message
+                disp(MSG)
+                txt = {[sprintf(MSG)]};            
+                text(0,-36,txt,'HorizontalAlignment','center')
+            else
+                MSG = commentators{randi(length(commentators))}+string(outOFBounds{randi(length(outOFBounds))}); % Out of bounds
+                disp(MSG)
+                txt = {[sprintf(MSG)]};            
+                text(0,-36,txt,'HorizontalAlignment','center')
+            end
             global lastTeamOnBall;
             otherTeam = -sign(lastTeamOnBall - 1);
             teamIndex = find(players{3}(:,1) == otherTeam);
@@ -103,5 +107,3 @@ function [ball, players, goal] = CheckBorders(ball, players)
     goal = 0;
 
 end
-
-% working on value 40  on lines 27,40
