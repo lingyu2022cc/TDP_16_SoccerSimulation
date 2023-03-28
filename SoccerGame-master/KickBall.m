@@ -2,17 +2,14 @@ function [updatedBall] = KickBall(ball, kickBallSigma, kickBallCoefficient, kick
 
 ballPosition = ball(1,:);
 updatedBall = ball;
-kickBallCoefficient=kickBallCoefficient*normrnd(1,0.1);
+%%set an error; error range:[-0.15,0.15]
+error = 0.3 * rand()- 0.15;
 
-kickDirection = (targetPosition - ballPosition)/norm(targetPosition - ballPosition);
-kickDirection(1) = kickDirection(1) + normrnd(0, kickBallSigma);
-kickDirection(2) = kickDirection(2) + normrnd(0, kickBallSigma);
+distanceError = targetPosition- ballPosition;
+distance = norm(distanceError);
+direction = distanceError/distance;
 
+kickDirection = direction + error;
+% update the speed of ball
 updatedBall(2,:)= updatedBall(2,:)+kickBallCoefficient*kickDirection;
-%updatedBall = BallAction(ball, timeDelta, kickBallAcceleration .* kickDirection);
-
-if kickBallCoefficient==8
-    %disp('kick ball!')
-end
-
 end
