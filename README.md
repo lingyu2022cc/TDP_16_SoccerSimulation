@@ -7,3 +7,5 @@
 25/03/2023  change the error when player kick ball on kickBall.m   by XK
 
 26/03/2023 updated：UpadatePlayers，Update, SoccerGame(by Chenwei Cui)
+
+28/03/2023 FinalUpdatedWork: Adjusted the goal size in Goal.m. Debugged the plotting for the rectangle in PlotBall.m. Added commentary to the game in CheckBorders.m. Added minor adjustments to the comments and will work on the players animations and static work.
