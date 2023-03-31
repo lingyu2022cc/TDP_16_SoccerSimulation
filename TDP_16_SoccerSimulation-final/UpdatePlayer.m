@@ -7,20 +7,20 @@ function [updatedPlayer, updatedBall] = UpdatePlayer(players, ball, indexOfPlaye
 global lastTeamOnBall;
 
 % Defines various constants and coefficients that are used in the function.
-nAttributes = size(players{3},2);                                               % The number of attributes that describe each player, such as their position and speed.
+%nAttributes = size(players{3},2);                                               % The number of attributes that describe each player, such as their position and speed.
 nPlayers=length(players{1});                                                    % The total number of players on the field.
 kickBallSigma = 1/200;                                                          % A constant used in the KickBall function, which represents the standard deviation of the noise added to the kick direction.
 passBallSigma = 1/200;                                                          % A constant used in the PassBall function, which represents the standard deviation of the noise added to the pass direction.
 kickBallAcceleration = 0.5;                                                     % A constant used in the KickBall function, which represents the acceleration of the ball after being kicked.
 passBallAcceleration = 0.5;                                                     % A constant used in the PassBall function, which represents the acceleration of the ball after being passed.
-shootBallCoefficient = 9;                                                       % A constant used in the KickBall function, which determines the strength of the kick towards the goal.
+shootBallCoefficient = 5;                                                       % A constant used in the KickBall function, which determines the strength of the kick towards the goal. Renamed as "kickBallCoefficient" in KickBall function.
 passBallCoefficient = 0.2;                                                      % A constant used in the PassBall function, which determines the strength of the pass towards the target player.
 moveForwardCoefficient = 0.5;                                                   % A constant used in the Move function, which determines how much a player moves forward when they have the ball.
-markedDistance = 10; % Between 10-15 seems optimal                              % The distance within which a player is considered marked by an opponent player.
 kickBallProbabilityCoefficient = 24;                                            % A constant used in the calculation of the likelihood of kicking the ball towards the goal.
 actionBallDistance = 4;                                                         % The distance within which a player can perform an action with the ball, such as passing or shooting.
 actionPlayerDistance = 15;                                                      % The distance within which a player can receive a pass.
 actionGoalDistance = 10;                                                        % The distance within which a player is close enough to the goal to consider shooting towards it.
+markedDistance = actionPlayerDistance * 0.7;                                    % The distance within which a player is considered marked by an opponent player. % Between 10-15 seems optimal. % 70% of actionPlayerDistance = 15 * 0.7 = 10.5. 
 
 % Sets the goalPosition based on the player's team.
 % If the player's team is 0 (Red Team), the goal is on the positive x-axis.
@@ -50,6 +50,10 @@ ballPosition = ball(1,:);
 distanceToBall = sqrt((ballPosition(1) - playerPosition(1))^2 + (ballPosition(2) - playerPosition(2))^2);
 distanceToGoal = sqrt((goalPosition(1) - playerPosition(1)).^2 + (goalPosition(2) - playerPosition(2)).^2);
 
+% % Calculate the total number of teammates within the "actionPlayerDistance":
+% teammatesWithinActionPlayerDistance = sum(sqrt(sum((players{1}(players{3} == players{3}(indexOfPlayer),:) - playerPosition).^2, 2)) <= actionPlayerDistance);
+% disp(['Number of teammates within action player distance: ', num2str(teammatesWithinActionPlayerDistance)]);
+
 % If the player is close enough to the ball, the player can perform an action.
 if distanceToBall < actionBallDistance
     
@@ -75,7 +79,7 @@ if distanceToBall < actionBallDistance
         % Kick the ball towards the goal if the random number generated is less than or equal to the kick likelihood range, or if the distance to the goal is less than the action goal distance
         targetPosition = goalPosition;  % Set the target position as the goal
         ball = KickBall(ball, kickBallSigma, shootBallCoefficient, kickBallAcceleration, targetPosition, timeDelta);  % Kick the ball
-    elseif IsMarked(players,indexOfPlayer,players{3}(indexOfPlayer),markedDistance) || mod(indexOfPlayer,nPlayers/2)==0 % If the player is marked or is the goalie
+    elseif (whatTodo > kickLikeRange) && (whatTodo <= passLikeRange) &&IsMarked(players,indexOfPlayer,players{3}(indexOfPlayer),markedDistance) || mod(indexOfPlayer,nPlayers/2)==0 % If the player is marked or is the goalie
         % Pass the ball to a teammate if the player is marked by an opponent player within the marked distance, or if the player is the goalkeeper
         targetPosition = ChoosePlayerToPass(players,indexOfPlayer,markedDistance);  % Choose another player to pass the ball to
         ball = PassBall(ball, passBallSigma, passBallCoefficient, passBallAcceleration, targetPosition, timeDelta);  % Pass the ball
@@ -89,4 +93,3 @@ updatedBall = ball; % Set updated ball to the current ball state
 updatedPlayer = Move(players, indexOfPlayer, updatedBall, timeDelta, playerOriginalPosition); % Update player state by moving to new position
 
 end
-
