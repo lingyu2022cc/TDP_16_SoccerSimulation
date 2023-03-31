@@ -48,7 +48,7 @@ function [ball, players, goal] = CheckBorders(ball, players)
             goal = 1;
             return
         else
-            if (((ball(1,1) < -45 && abs(ball(1,2)) <= 20) || (ball(1,1) > 45 && abs(ball(1,2))) <= 20) && abs(ball(1,2)) > 13)
+            if ((ball(1,1) < -45) && (abs(ball(1,2)) <= 20) && (abs(ball(1,2)) > 13)) || ((ball(1,1) > 45) && (abs(ball(1,2)) <= 20) && (abs(ball(1,2)) > 13))
                 MSG = commentators{randi(length(commentators))} + string(nearMissMsgs{randi(length(nearMissMsgs))}); % Ball is out of bounds but not a goal, show near miss message
                 disp(MSG)
                 txt = {[sprintf(MSG)]};            
