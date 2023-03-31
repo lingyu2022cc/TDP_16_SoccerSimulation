@@ -7,3 +7,5 @@
 25/03/2023  change the error when player kick ball on kickBall.m   by XK
 
 26/03/2023 updated：UpadatePlayers，Update, SoccerGame(by Chenwei Cui)
+
+31/03/2023 FinalUpdatedWork: Squashed a bug for the condition of corner kicks on CheckBorders.m. It shouldn't break the ball parameters for plotting now. (By Ahmad)
