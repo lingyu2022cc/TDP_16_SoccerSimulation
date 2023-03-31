@@ -1,4 +1,4 @@
-function [updatedBall] = BallKicking(ball, kickBallSigma, kickBallAcceleration, targetPosition, timeDelta)
+function [updatedBall] = BallKicking(ball, kickBallSigma, kickBallCoefficient, targetPosition, timeDelta)
 
 ballPosition = ball(1,:);
 updatedBall = ball;
@@ -16,7 +16,7 @@ kickDirection(1) = kickDirection(1) + normrnd(0, kickBallSigma); % Add random no
 kickDirection(2) = kickDirection(2) + normrnd(0, kickBallSigma); % Add random noise to the y-component of the kick direction
 
 % Update the speed of the ball
-updatedBall(2,:) = updatedBall(2,:) + kickBallAcceleration * kickDirection;
+updatedBall(2,:) = updatedBall(2,:) + kickBallCoefficient * kickDirection;
 
 % Apply a damping factor to account for deceleration (e.g., due to air resistance or friction)
 dampingFactor = 0.95;
