@@ -11,3 +11,5 @@
 28/03/2023 FinalUpdatedWork: Adjusted the goal size in Goal.m. Debugged the plotting for the rectangle in PlotBall.m. Added commentary to the game in CheckBorders.m. Added minor adjustments to the comments and will work on the players animations and static work. (By Ahmad)
 
 28/03/2023 updated passBall.m  by XK
+
+31/03/2023 FinalUpdatedWork: Squashed a bug for the condition of corner kicks on CheckBorders.m. It shouldn't break the ball parameters for plotting now. (By Ahmad)
