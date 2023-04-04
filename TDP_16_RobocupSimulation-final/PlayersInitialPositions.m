@@ -1,4 +1,4 @@
-function [players,playerOriginalPosition] = PlayersInitialPositions(formation1,formation2,fieldSize,attributes,kickoffTeam)
+function [players,playerOriginalPosition] = PlayersInitialPositions(formation1,formation2,attributes,kickoffTeam)
 
 nPlayers=sum(formation1)+sum(formation2)+2;
 epsillon=1/10;
