@@ -37,7 +37,7 @@ while time < timeSteps
     
     % Reset the ball and player attributes to their initial values for each new round
     ball = BallInitialPosition(startPositionBall, startVelBall, startAccBall);
-    [players, playerOriginalPosition] = PlayersInitialPositions(formation1, formation2, field, attributes, kickoffTeam);
+    [players, playerOriginalPosition] = PlayersInitialPositions(formation1, formation2, attributes, kickoffTeam);
 
     pause(1); % Pause for 1 second before starting the round
     
