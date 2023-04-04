@@ -1,5 +1,4 @@
-
-function [x, y, ball, vx, vy] = PlayersAndBallCollisions(x, y, ball, particleRadius, vx, vy)
+function [x, y, ball] = PlayersAndBallCollisions(x, y, ball, particleRadius)
 
 gridSize = length(x);
 c = 1.2;
@@ -11,21 +10,11 @@ for i = 1:gridSize
             deltaY = y(i) - y(j);
             distance = sqrt(deltaX^2 + deltaY^2);
             
-            if distance < 2 * particleRadius        % Calculate collision response based on conservation of momentum       
+            if distance < 2 * particleRadius
+                % Calculate collision response based on conservation of momentum       
                 normalX = deltaX / distance;
                 normalY = deltaY / distance;
-                relativeVelocityX = vx(i) - vx(j);
-                relativeVelocityY = vy(i) - vy(j);
-                dotProduct = relativeVelocityX * normalX + relativeVelocityY * normalY;
-                
-                if dotProduct < 0
-                    impulse = 2 * dotProduct / (1 / particleRadius + 1 / particleRadius);
-                    vx(i) = vx(i) - impulse * normalX;
-                    vy(i) = vy(i) - impulse * normalY;
-                    vx(j) = vx(j) + impulse * normalX;
-                    vy(j) = vy(j) + impulse * normalY;
-                end
-                
+
                 % Reposition players to prevent overlapping
                 overlap = 2 * particleRadius - distance;
                 x(i) = x(i) + c * overlap * normalX / 2;
@@ -37,5 +26,3 @@ for i = 1:gridSize
     end
 end
 
-
-end
