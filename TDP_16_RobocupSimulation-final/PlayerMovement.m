@@ -29,7 +29,7 @@ if indexOfPlayer==nPlayers/2 || indexOfPlayer==nPlayers %goalie
         playerDirection = atan2(playerOriginalPosition(indexOfPlayer,2)- playerPosition(2),playerOriginalPosition(indexOfPlayer,1)- playerPosition(1));
     end
 else %players (not goalie)
-    if (distanceToBall<actionPlayerDistance && distanceToOriginalPosition < 1.0*actionPlayerDistance)...
+    if (distanceToBall < 1.0*actionPlayerDistance && distanceToOriginalPosition < 4.0*actionPlayerDistance)...
             || indexOfPlayer==(indexOfPlayerThatWillGoForTheBall+playerTeam*nPlayers/2)
         playerDirection = atan2(ballPosition(2) - playerPosition(2),ballPosition(1) - playerPosition(1));
     else
