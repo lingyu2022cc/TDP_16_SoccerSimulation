@@ -1,37 +1,41 @@
-function [x,y,ball]=PlayersAndBallCollisions(x,y,ball,particleRadius)
 
-gridSize=length(x);
-c=1.0;
+function [x, y, ball, vx, vy] = PlayersAndBallCollisions(x, y, ball, particleRadius, vx, vy)
 
-%player collisions
+gridSize = length(x);
+c = 1.2;
+
 for i = 1:gridSize
-    for j = 1:i
+    for j = 1:i-1
         if i ~= j
-            distance = sqrt((x(i) - x(j)).^2+(y(i) - y(j)).^2);
-            if distance < 2*particleRadius
-                repulsion = (2*particleRadius-distance)/2;
-                x(i) = x(i) + c*repulsion*(x(i)-x(j))/distance;
-                x(j) = x(j) - c*repulsion*(x(i)-x(j))/distance;
-                y(i) = y(i) + c*repulsion*(y(i)-y(j))/distance;
-                y(j) = y(j) - c*repulsion*(y(i)-y(j))/distance;
+            deltaX = x(i) - x(j);
+            deltaY = y(i) - y(j);
+            distance = sqrt(deltaX^2 + deltaY^2);
+            
+            if distance < 2 * particleRadius        % Calculate collision response based on conservation of momentum       
+                normalX = deltaX / distance;
+                normalY = deltaY / distance;
+                relativeVelocityX = vx(i) - vx(j);
+                relativeVelocityY = vy(i) - vy(j);
+                dotProduct = relativeVelocityX * normalX + relativeVelocityY * normalY;
+                
+                if dotProduct < 0
+                    impulse = 2 * dotProduct / (1 / particleRadius + 1 / particleRadius);
+                    vx(i) = vx(i) - impulse * normalX;
+                    vy(i) = vy(i) - impulse * normalY;
+                    vx(j) = vx(j) + impulse * normalX;
+                    vy(j) = vy(j) + impulse * normalY;
+                end
+                
+                % Reposition players to prevent overlapping
+                overlap = 2 * particleRadius - distance;
+                x(i) = x(i) + c * overlap * normalX / 2;
+                x(j) = x(j) - c * overlap * normalX / 2;
+                y(i) = y(i) + c * overlap * normalY / 2;
+                y(j) = y(j) - c * overlap * normalY / 2;
             end
         end
     end
 end
 
-% %ball collisions below
-% c2=1;
-% for i = 1:gridSize
-%     distance = sqrt((x(i) - ball(1,1)).^2+(y(i) - ball(1,2)).^2);
-%     if distance < 2*particleRadius
-%         repulsion = (2*particleRadius-distance)/2;
-%         %x(i) = x(i) + c2*repulsion*(x(i)-ball(1,1))/distance;
-%         ball(1,1) = ball(1,1) - 2*c2*repulsion*(x(i)-ball(1,1))/distance;
-%         %y(i) = y(i) + c2*repulsion*(y(i)-ball(1,2))/distance;
-%         ball(1,2) = ball(1,2) - 2*c2*repulsion*(y(i)-ball(1,2))/distance;
-% %         ball(2,1)=0;
-% %         ball(2,2)=0;
-%     end
-% end
 
 end
