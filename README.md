@@ -22,3 +22,5 @@
 04/04/2023 change collision code by YL  
 
 05/04/2023 updated plotTheplayers.m, plotTheBall.m, PlayerInitialPosition.m, and PlayerMovement.m. (By Yue)
+
+05/04/2023 solved shacking problem. (By Yue)
