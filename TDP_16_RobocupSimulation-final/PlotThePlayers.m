@@ -2,7 +2,7 @@ function [] = PlotThePlayers(players)
 pos = players{1};
 
 %Players size
-radie = 2;
+radie = 1.5;
 
 hold on
 team = players{3};
