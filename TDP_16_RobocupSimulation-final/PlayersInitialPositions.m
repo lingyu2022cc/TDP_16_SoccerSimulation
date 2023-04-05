@@ -36,7 +36,7 @@ end
 
 %Fixing angles, velocities=0.03 in the begining
 players{2}(nPlayers/2+1:end,2)=pi;
-players{2}(:,1)=0.03;
+players{2}(:,1)=0;
 
 %attributes
 players{3}=attributes;
