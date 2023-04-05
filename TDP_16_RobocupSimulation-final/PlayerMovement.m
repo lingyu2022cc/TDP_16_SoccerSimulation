@@ -13,7 +13,7 @@ playerVelocity = players{2}(indexOfPlayer,:);
 playerPositions = players{1}(playerTeam*nPlayers/2+(1:nPlayers/2),:);
 
 %set the acceleration
-playerAcceleration = 0.5;
+playerAcceleration = 1;
 
 ballPosition = ball(1,:);
 distanceToBall = norm(ballPosition-playerPosition);
@@ -37,9 +37,9 @@ else %players (not goalie)
     end
 end
 
-player{1}(indexOfPlayer,1) = playerPosition(1) + cos(playerDirection) * playerVelocity(1) * timeDelta + 0.5 * playerAcceleration * cos(playerDirection) * timeDelta * timeDelta;
-player{1}(indexOfPlayer,2) = playerPosition(2) + sin(playerDirection) * playerVelocity(1) * timeDelta + 0.5 * playerAcceleration * sin(playerDirection) * timeDelta * timeDelta;
-player{2}(indexOfPlayer,1) = 1;
+player{1}(indexOfPlayer,1) = playerPosition(1) + cos(playerDirection) * playerVelocity(1) * timeDelta;
+player{1}(indexOfPlayer,2) = playerPosition(2) + sin(playerDirection) * playerVelocity(1) * timeDelta;
+player{2}(indexOfPlayer,1) = 0 + playerAcceleration*timeDelta;
 player{2}(indexOfPlayer,2) = playerDirection;
 player{3} = players{3}(indexOfPlayer,:);
 
