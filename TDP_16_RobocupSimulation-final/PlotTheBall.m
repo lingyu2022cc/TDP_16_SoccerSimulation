@@ -6,7 +6,7 @@ function PlotTheBall(ball)
 ballPosition = ball(1,:);
 
 % Calculates the position of the circle that represents the ball.
-ballRadius = 1.5;
+ballRadius = 1;
 plotpos(1) = ballPosition(1) - ballRadius;
 plotpos(2) = ballPosition(2) - ballRadius;
 plotpos(3) = 2 * ballRadius;
