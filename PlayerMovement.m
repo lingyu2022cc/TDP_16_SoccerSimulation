@@ -153,7 +153,7 @@ else
         if (distanceToBall < 1.0*actionPlayerDistance && 1.0*distanceToOriginalPosition < actionPlayerDistance)...
                 || indexOfPlayer==(indexOfPlayerThatWillGoForTheBall+playerTeam*nPlayers/2)
             playerDirection = atan2(ballPosition(2) - playerPosition(2),ballPosition(1) - playerPosition(1));
-        elseif distanceToOriginalPosition <= errorc
+        elseif distanceToOriginalPosition <= error
             a = 0;
             playerDirection = players{2}(indexOfPlayer,2);
         else
@@ -162,7 +162,7 @@ else
     % red team
     % striker1
     elseif indexOfPlayer==1 
-        if (distanceToBall < 2.0*actionPlayerDistance && distanceToOriginalPosition < 1.0*actionPlayerDistance)...
+        if (distanceToBall < 1.5*actionPlayerDistance && distanceToOriginalPosition < 1.5*actionPlayerDistance)...
                 || indexOfPlayer==(indexOfPlayerThatWillGoForTheBall+playerTeam*nPlayers/2)
             playerDirection = atan2(ballPosition(2) - playerPosition(2),ballPosition(1) - playerPosition(1));
         elseif distanceToOriginalPosition <= error
@@ -173,7 +173,7 @@ else
         end
     % striker2
     elseif indexOfPlayer==2 
-        if (distanceToBall < 1.0*actionPlayerDistance && distanceToOriginalPosition < 1.0*actionPlayerDistance)...
+        if (distanceToBall < 3.0*actionPlayerDistance && distanceToOriginalPosition < 3.0*actionPlayerDistance)...
                 || indexOfPlayer==(indexOfPlayerThatWillGoForTheBall+playerTeam*nPlayers/2)
             playerDirection = atan2(ballPosition(2) - playerPosition(2),ballPosition(1) - playerPosition(1));
         elseif distanceToOriginalPosition <= error
@@ -197,7 +197,7 @@ else
     % blue team
     % striker1
     elseif indexOfPlayer==5 
-        if (distanceToBall < 2.0*actionPlayerDistance && distanceToOriginalPosition < 2.0*actionPlayerDistance)...
+        if (distanceToBall < 1.5*actionPlayerDistance && distanceToOriginalPosition < 1.5*actionPlayerDistance)...
                 || indexOfPlayer==(indexOfPlayerThatWillGoForTheBall+playerTeam*nPlayers/2)
             playerDirection = atan2(ballPosition(2) - playerPosition(2),ballPosition(1) - playerPosition(1));
         elseif distanceToOriginalPosition <= error
@@ -208,7 +208,7 @@ else
         end
     % striker2
     elseif indexOfPlayer==6 
-        if (distanceToBall < 2.0*actionPlayerDistance && distanceToOriginalPosition < 2.0*actionPlayerDistance)...
+        if (distanceToBall < 3.0*actionPlayerDistance && distanceToOriginalPosition < 3.0*actionPlayerDistance)...
                 || indexOfPlayer==(indexOfPlayerThatWillGoForTheBall+playerTeam*nPlayers/2)
             playerDirection = atan2(ballPosition(2) - playerPosition(2),ballPosition(1) - playerPosition(1));
         elseif distanceToOriginalPosition <= error
@@ -233,7 +233,7 @@ end
 
 player{1}(indexOfPlayer,1) = playerPosition(1) + a*cos(playerDirection) * playerVelocity(1) * timeDelta;
 player{1}(indexOfPlayer,2) = playerPosition(2) + a*sin(playerDirection) * playerVelocity(1) * timeDelta;
-player{2}(indexOfPlayer,1) = 1;
+player{2}(indexOfPlayer,1) = 0.5;
 player{2}(indexOfPlayer,2) = playerDirection;
 player{3} = players{3}(indexOfPlayer,:);
 
