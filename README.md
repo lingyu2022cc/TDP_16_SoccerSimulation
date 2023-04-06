@@ -16,6 +16,7 @@
 31/03/2023 FinalUpdatedWork: Squashed a bug for the condition of corner kicks on CheckBorders.m. It shouldn't break the ball parameters for plotting now. (By Ahmad)  
 
 31/03/2023 TDP_16_RobocupSimulation-final: This has the updated function names and final work so far. (By Ahmad)  
+31/03/2023 updated initial players and intial ball  by YL
 
 04/04/2023 updated PlayerInitialPositions.m and PlayerMovement.m. (By Yue)  
 
