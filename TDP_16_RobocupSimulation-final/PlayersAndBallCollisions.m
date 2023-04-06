@@ -25,4 +25,3 @@ for i = 1:gridSize
         end
     end
 end
-

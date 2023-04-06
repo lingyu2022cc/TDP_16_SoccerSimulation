@@ -1,4 +1,4 @@
-function [updatedPlayer, updatedBall] = UpdatePlayerState(players, ball, indexOfPlayer, timeDelta, playerOriginalPosition)
+function [updatedPlayer, updatedBall] = UpdatePlayerState(players, ball, indexOfPlayer, timeDelta, playerOriginalPosition, goalsTeam0, goalsTeam1)
 % This function updates the state of a player and the ball based on the action rules. 
 % It takes the current positions of all the players and the ball, the index of the player to update, the time since the last update, and the player's original position. 
 % It returns the updated state of the player and the ball. The function uses a global variable to keep track of which team is currently in possession of the ball.
@@ -13,10 +13,10 @@ kickBallSigma = 1/200;                                                          
 passBallSigma = 1/200;                                                          % A constant used in the PassBall function, which represents the standard deviation of the noise added to the pass direction.
 kickBallAcceleration = 0.5;                                                     % A constant used in the KickBall function, which represents the acceleration of the ball after being kicked.
 passBallAcceleration = 0.5;                                                     % A constant used in the PassBall function, which represents the acceleration of the ball after being passed.
-shootBallCoefficient = 5;                                                       % A constant used in the KickBall function, which determines the strength of the kick towards the goal. Renamed as "kickBallCoefficient" in KickBall function.
+shootBallCoefficient = 0.5;                                                       % A constant used in the KickBall function, which determines the strength of the kick towards the goal. Renamed as "kickBallCoefficient" in KickBall function.
 kickBallCoefficient = 5;                                                       % A constant used in the KickBall function, which determines the strength of the kick towards the goal. Renamed as "kickBallCoefficient" in KickBall function.
-passBallCoefficient = 0.2;                                                      % A constant used in the PassBall function, which determines the strength of the pass towards the target player.
-moveForwardCoefficient = 0.5;                                                   % A constant used in the Move function, which determines how much a player moves forward when they have the ball.
+passBallCoefficient = 0.1;                                                      % A constant used in the PassBall function, which determines the strength of the pass towards the target player.
+moveForwardCoefficient = 0.2;                                                   % A constant used in the Move function, which determines how much a player moves forward when they have the ball.
 kickBallProbabilityCoefficient = 24;                                            % A constant used in the calculation of the likelihood of kicking the ball towards the goal.
 actionBallDistance = 4;                                                         % The distance within which a player can perform an action with the ball, such as passing or shooting.
 actionPlayerDistance = 15;                                                      % The distance within which a player can receive a pass.
@@ -91,6 +91,11 @@ if distanceToBall < actionBallDistance
 end
 
 updatedBall = ball; % Set updated ball to the current ball state
-updatedPlayer = PlayerMovement(players, indexOfPlayer, updatedBall, timeDelta, playerOriginalPosition); % Update player state by moving to new position
 
+if goalsTeam0==goalsTeam1
+    updatedPlayer = TiedMovement(players, indexOfPlayer, updatedBall, timeDelta, playerOriginalPosition); % Update player state by moving to new position
+elseif goalsTeam0>goalsTeam1
+    updatedPlayer = RABDMovement(players, indexOfPlayer, updatedBall, timeDelta, playerOriginalPosition);
+else
+    updatedPlayer = RDBAMovement(players, indexOfPlayer, updatedBall, timeDelta, playerOriginalPosition);
 end

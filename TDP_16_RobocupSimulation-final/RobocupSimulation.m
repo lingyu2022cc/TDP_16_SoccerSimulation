@@ -19,8 +19,8 @@ startPositionBall = [0;0];  % Start position of the ball in the center of the fi
 startVelBall = [0;0];       % Start velocity of the ball is initialized as zero (standing still)
 startAccBall = [0;0];       % Start acceleration of the ball is initialized as zero (not )
 
+goalsTeam0=0;
 goalsTeam1=0;
-goalsTeam2=0;
 
 timeSteps = 6000*20;    % Timesteps of the simulation in seconds (6000 Timesteps roughly equals 1 minute)
 timeDelta = 1;          % The gametime elapsed between every update
@@ -29,7 +29,7 @@ timeSync = 0.01;        % Time between drawing of each plot
 % With these settings one simulation will take around 20 minutes (half time of the total match)
 time=0; % For simulating
 tic();  % For plotting       
-pause(1)
+pause(0.01)
 
 % Initialize a while loop that will run for the specified number of time steps
 while time < timeSteps
@@ -37,7 +37,7 @@ while time < timeSteps
     
     % Reset the ball and player attributes to their initial values for each new round
     ball = BallInitialPosition(startPositionBall, startVelBall, startAccBall);
-    [players, playerOriginalPosition] = PlayersInitialPositions(formation1, formation2, attributes, kickoffTeam);
+    [players, playerOriginalPosition] = PlayersInitialPositions(formation1, formation2, attributes, kickoffTeam, goalsTeam0, goalsTeam1);
 
     pause(1); % Pause for 1 second before starting the round
     
@@ -45,7 +45,7 @@ while time < timeSteps
     while isGoal == false
 
         % Update player and ball positions based on time elapsed
-        [players, ball] = SimulationSync(players, ball, timeSync, timeDelta, playerOriginalPosition);
+        [players, ball] = SimulationSync(players, ball, timeSync, timeDelta, playerOriginalPosition, goalsTeam0, goalsTeam1);
         
         % Plot the playing field, players, and ball on the figure window
         PlotTheField(field)
@@ -56,7 +56,7 @@ while time < timeSteps
         [ball, players, goal] = FieldBorders(ball, players);
         
         % Check if a goal has been scored and update the goal flag and score accordingly
-        [isGoal, goalsTeam1, goalsTeam2, kickoffTeam] = Scoring(ball, goalsTeam1, goalsTeam2);
+        [isGoal, goalsTeam0, goalsTeam1, kickoffTeam] = Scoring(ball, goalsTeam0, goalsTeam1);
         
         % Update the time elapsed and format it as minutes, seconds, and milliseconds
         t = toc();
@@ -75,12 +75,12 @@ while time < timeSteps
         
         % Display the current time and score
         if t < 1200
-            txt = {[sprintf('%02d',min) ':' sprintf('%02d',sec) ':' sprintf('%02d',rem(msec, 100))],[sprintf('Red ') num2str(goalsTeam1) '-' num2str(goalsTeam2) sprintf(' Blue')]};
+            txt = {[sprintf('%02d',min) ':' sprintf('%02d',sec) ':' sprintf('%02d',rem(msec, 100))],[sprintf('Red ') num2str(goalsTeam0) '-' num2str(goalsTeam1) sprintf(' Blue')]};
             text(0,45,txt,'HorizontalAlignment','center')
         elseif t >= 1200
             % If more than 60 seconds have elapsed, add extra time for a final push
             time = 6000 * 20; % Set the time to 20 minutes
-            txt = {[sprintf('%02d',min) ':' sprintf('%02d',sec) ':' sprintf('%02d',rem(msec, 100))],[num2str(goalsTeam1) '-' num2str(goalsTeam2)],[sprintf('Time''s up! Extra time is now added for the final push!')]};
+            txt = {[sprintf('%02d',min) ':' sprintf('%02d',sec) ':' sprintf('%02d',rem(msec, 100))],[num2str(goalsTeam0) '-' num2str(goalsTeam1)],[sprintf('Time''s up! Extra time is now added for the final push!')]};
             text(0,43,txt,'HorizontalAlignment','center')
         end 
         
@@ -95,13 +95,13 @@ PlotTheField(field)     % Plot the soccer field
 PlotThePlayers(players)    % Plot the players
 
 % Check which team has won or if it is a tie, and display the appropriate text
-if goalsTeam1 > goalsTeam2 % If Red team has won
-    txt = {[sprintf('%02d',min) ':' sprintf('%02d',sec) ':' sprintf('%02d',rem(msec, 100))],[num2str(goalsTeam1) '-' num2str(goalsTeam2)],[sprintf('Red team won with %d goals!', goalsTeam1)]};
+if goalsTeam0 > goalsTeam1 % If Red team has won
+    txt = {[sprintf('%02d',min) ':' sprintf('%02d',sec) ':' sprintf('%02d',rem(msec, 100))],[num2str(goalsTeam0) '-' num2str(goalsTeam1)],[sprintf('Red team won with %d goals!', goalsTeam0)]};
     text(0,43,txt,'HorizontalAlignment','center')
-elseif goalsTeam2 > goalsTeam1 % If Blue team has won
-    txt = {[sprintf('%02d',min) ':' sprintf('%02d',sec) ':' sprintf('%02d',rem(msec, 100))],[num2str(goalsTeam1) '-' num2str(goalsTeam2)],[sprintf('Blue team won with %d goals!', goalsTeam2)]};
+elseif goalsTeam1 > goalsTeam0 % If Blue team has won
+    txt = {[sprintf('%02d',min) ':' sprintf('%02d',sec) ':' sprintf('%02d',rem(msec, 100))],[num2str(goalsTeam0) '-' num2str(goalsTeam1)],[sprintf('Blue team won with %d goals!', goalsTeam1)]};
     text(0,43,txt,'HorizontalAlignment','center')
-elseif goalsTeam1 == goalsTeam2 % If it is a tie
-    txt = {[sprintf('%02d',min) ':' sprintf('%02d',sec) ':' sprintf('%02d',rem(msec, 100))],[num2str(goalsTeam1) '-' num2str(goalsTeam2)],[sprintf('It''s a tie with %d goals to %d goals for Red team and Blue team, respectively!', goalsTeam1, goalsTeam2)]};
+elseif goalsTeam0 == goalsTeam1 % If it is a tie
+    txt = {[sprintf('%02d',min) ':' sprintf('%02d',sec) ':' sprintf('%02d',rem(msec, 100))],[num2str(goalsTeam0) '-' num2str(goalsTeam1)],[sprintf('It''s a tie with %d goals to %d goals for Red team and Blue team, respectively!', goalsTeam0, goalsTeam1)]};
     text(0,43,txt,'HorizontalAlignment','center')
 end
