@@ -1,5 +1,5 @@
 function [updatedPlayer] = RDBAMovement(players, indexOfPlayer, ball, timeDelta, playerOriginalPosition)
-% Red team attack and blue team defend
+% Red team defend and blue team attack
 
 nPlayers=length(players{1});
 playerTeam=players{3}(indexOfPlayer);
