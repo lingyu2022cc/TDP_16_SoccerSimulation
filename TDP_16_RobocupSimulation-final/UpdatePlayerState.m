@@ -97,10 +97,6 @@ end
 
 updatedBall = ball; % Set updated ball to the current ball state
 
-if goalsTeam0==goalsTeam1
-    updatedPlayer = TiedMovement(players, indexOfPlayer, updatedBall, timeDelta, playerOriginalPosition); % Update player state by moving to new position
-elseif goalsTeam0>goalsTeam1
-    updatedPlayer = RABDMovement(players, indexOfPlayer, updatedBall, timeDelta, playerOriginalPosition);
-else
-    updatedPlayer = RDBAMovement(players, indexOfPlayer, updatedBall, timeDelta, playerOriginalPosition);
+updatedPlayer = PlayerMovement(players, indexOfPlayer, updatedBall, timeDelta, playerOriginalPosition, goalsTeam0, goalsTeam1); % Update player state by moving to new position
+
 end
