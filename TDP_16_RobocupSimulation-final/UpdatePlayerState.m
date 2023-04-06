@@ -22,7 +22,7 @@ actionBallDistance = 4;                                                         
 actionPlayerDistance = 15;                                                      % The distance within which a player can receive a pass.
 actionGoalDistance = 10;                                                        % The distance within which a player is close enough to the goal to consider shooting towards it.
 markedDistance = actionPlayerDistance * 0.7;                                    % The distance within which a player is considered marked by an opponent player. % Between 10-15 seems optimal. % 70% of actionPlayerDistance = 15 * 0.7 = 10.5. 
-
+ignoreMarkedDistance =8;
 % Sets the goalPosition based on the player's team.
 % If the player's team is 0 (Red Team), the goal is on the positive x-axis.
 % If the player's team is 1 (Blue Team), the goal is on the negative x-axis.
@@ -81,9 +81,14 @@ if distanceToBall < actionBallDistance
         targetPosition = goalPosition;  % Set the target position as the goal
         ball = BallKicking(ball, kickBallSigma, shootBallCoefficient, targetPosition, timeDelta);  % Kick the ball
     elseif (whatTodo > kickLikeRange) && (whatTodo <= passLikeRange) && MarkedPlayers(players,indexOfPlayer,players{3}(indexOfPlayer),markedDistance) || mod(indexOfPlayer,nPlayers/2)==0 % If the player is marked or is the goalie
+        if MarkedPlayers(players,indexOfPlayer,players{3}(indexOfPlayer),markedDistance)&& distanceToGoal<ignoreMarkedDistance
+        targetPosition = goalPosition;  % Set the target position as the goal
+        ball = BallKicking(ball, kickBallSigma, shootBallCoefficient, kickBallAcceleration, targetPosition, timeDelta);  % Kick the ball
+        else
         % Pass the ball to a teammate if the player is marked by an opponent player within the marked distance, or if the player is the goalkeeper
         targetPosition = LookForTeammates(players,indexOfPlayer,markedDistance);  % Look for another teammate to pass the ball to
         ball = BallPassing(ball, passBallSigma, passBallCoefficient, passBallAcceleration, targetPosition, timeDelta);  % Pass the ball
+        end
     else % If the player is not marked and can go forward with the ball
         targetPosition = [goalPosition(1)+sign(players{3}(indexOfPlayer)-1/2) players{1}(indexOfPlayer,2)];  % Set the target position as forward of the player
         ball = BallKicking(ball, kickBallSigma, moveForwardCoefficient, targetPosition, timeDelta);  % Kick the ball forward
