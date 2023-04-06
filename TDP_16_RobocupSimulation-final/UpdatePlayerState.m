@@ -22,7 +22,7 @@ actionBallDistance = 4;                                                         
 actionPlayerDistance = 15;                                                      % The distance within which a player can receive a pass.
 actionGoalDistance = 10;                                                        % The distance within which a player is close enough to the goal to consider shooting towards it.
 markedDistance = actionPlayerDistance * 0.7;                                    % The distance within which a player is considered marked by an opponent player. % Between 10-15 seems optimal. % 70% of actionPlayerDistance = 15 * 0.7 = 10.5. 
-ignoreMarkedDistance =8;
+ignoreMarkedDistance =7;
 % Sets the goalPosition based on the player's team.
 % If the player's team is 0 (Red Team), the goal is on the positive x-axis.
 % If the player's team is 1 (Blue Team), the goal is on the negative x-axis.
